@@ -21,13 +21,19 @@
 	
 	// Check which button was pressed
 	if (isset($_POST['btnProfSsn'])){
+		// Check if the input is empty
 		if (!empty($_POST['PSsn'])){
+			// Read the sql file cause i am lazy
 			$Test = file_get_contents("sql/ProfessorA.sql");
+			// Replace with the SSN value
 			$Test = str_replace("REPLACE", (string)$_POST['PSsn'], $Test);
+			// Run the query
 			$Professor = mysql_query($Test, $link) or die("Unable to run query $Test");
 			$NumOfRows = mysql_numrows($Professor);
+			// If the number of rows is 0, that means the query returned empty
 			if ($NumOfRows > 0){
 				echo "<p>Class Schedual for ",mysql_result($Professor,0,"P.P_Name"),"</p>";
+				// Make a table to organize the data better
 				echo "<table border='1'><tr><td>SSN</td><td>Classroom</td><td>Meeting Days</td><td>Beginning Time</td><td>Ending Time</td></tr>";
 				for($i = 0; $i<mysql_numrows($Professor);$i++){
 					echo "<tr>";
