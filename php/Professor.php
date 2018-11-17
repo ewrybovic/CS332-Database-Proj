@@ -34,10 +34,11 @@
 			if ($NumOfRows > 0){
 				echo "<p>Class Schedual for ",mysql_result($Professor,0,"P.P_Name"),"</p>";
 				// Make a table to organize the data better
-				echo "<table border='1'><tr><td>SSN</td><td>Classroom</td><td>Meeting Days</td><td>Beginning Time</td><td>Ending Time</td></tr>";
+				echo "<table border='1'><tr><td>SSN</td><td>Course Title</td><td>Classroom</td><td>Meeting Days</td><td>Beginning Time</td><td>Ending Time</td></tr>";
 				for($i = 0; $i<mysql_numrows($Professor);$i++){
 					echo "<tr>";
 					echo "<td>",mysql_result($Professor,$i,"P.P_Ssn"),"</td>";
+					echo "<td>",mysql_result($Professor,$i,"C.C_Title"),"</td>";
 					echo "<td>",mysql_result($Professor,$i,"CS.CS_Classroom"),"</td>";
 					echo "<td>",mysql_result($Professor,$i,"CS.CS_MeetingDays"),"</td>";
 					echo "<td>",mysql_result($Professor,$i,"CS.CS_BeginningTime"),"</td>";

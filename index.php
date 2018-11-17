@@ -7,7 +7,7 @@
 	<body>
 		<h1>Database Project for CS332</h1>
 		<div class="tab">
-			<!-- 	class for CSS styling     on click listener calls function from tab.js  -->
+			<!-- 	class for CSS styling, on click listener calls function from tab.js  -->
 			<button class="tablinks" onclick="openQuery(event, 'Professor')">Professor</button>
 			<button class="tablinks" onclick="openQuery(event, 'Student')">Student</button>
 		</div>

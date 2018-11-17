@@ -4,5 +4,5 @@ VALUES(
 	"Comp Sci",
 	"(714)562-8800",
 	"Computer Science Building",
-	123456
+	0
 );
