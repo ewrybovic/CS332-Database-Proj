@@ -1,4 +1,4 @@
-SELECT E.ER_Grade, Count(E.ER_Grade)
+SELECT E.ER_Grade, Count(E.ER_Grade) as NumOfGrade, C.C_Title
 from EnrollmentRecord E, ClassSection CS, Course C
 where E.ER_CourseSection = CS.CS_Num and
 	  CS.CS_CourseNumber = C.C_Num and
