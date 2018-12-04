@@ -24,11 +24,11 @@
 		// Check if the input is empty
 		if (!empty($_POST['PSsn'])){
 			// Read the sql file cause i am lazy
-			$Test = file_get_contents("sql/ProfessorA.sql");
+			$SQL = file_get_contents("sql/ProfessorA.sql");
 			// Replace with the SSN value
-			$Test = str_replace("REPLACE", (string)$_POST['PSsn'], $Test);
+			$SQL = str_replace("REPLACE", (string)$_POST['PSsn'], $SQL);
 			// Run the query
-			$Professor = mysql_query($Test, $link) or die("Unable to run query $Test");
+			$Professor = mysql_query($SQL, $link) or die("Unable to run query $SQL");
 			$NumOfRows = mysql_numrows($Professor);
 			// If the number of rows is 0, that means the query returned empty
 			if ($NumOfRows > 0){
@@ -59,7 +59,34 @@
 	else if (isset($_POST['btnProfCourse'])){
 		
 		if (!empty($_POST['PCourseNum']) && !empty($_POST['PSectionNum'])){
-			echo "Good Job!";
+			// Read the SQL file 
+			$SQL = file_get_contents("sql/ProfessorB.sql");
+			
+			// Replace the two tags with the values the user gives
+			$SQL = str_replace("REPLACE_CLASS", (string)$_POST['PCourseNum'], $SQL);
+			$SQL = str_replace("REPLACE_SECTIION", (string)$_POST['PSectionNum'], $SQL);
+			
+			// Run the query
+			$Query = mysql_query($SQL, $link) or die("Unable to run query $SQL");
+			$NumOfRows = mysql_numrows($Query);
+			if ($NumOfRows > 0){
+				echo "<p> Grades for ", mysql_result($Query, 0, "C.C_Title"),"</p>";
+				echo "<table border='1'><tr><td>Grade</td><td>Number of Grade</td></tr>";
+				
+				// Loop through the rows of the query
+				for($i; $i<$NumOfRows; $i++){
+					echo "<tr>";
+					echo "<td>",mysql_result($Query, $i, "E.ER_Grade"),"</td>";
+					echo "<td>",mysql_result($Query, $i, "NumOfGrade"),"</td>";
+					echo "</tr>";
+				}
+				
+				echo "</table><br>";
+			}
+			else{
+				echo "<h1> Not a Valid Query</h1>";
+			}
+			
 		}
 		else{
 			echo "<h1>Fill out every location please!</h1>";
