@@ -23,9 +23,7 @@
 					<input type="text" name="PSsn"><br><br>
 					<input type="submit" name="btnProfSsn" class="submitButton" value="Submit">
 				</fieldset>
-			</form>
-			
-			<form action="index.php" target="_self" method="post">
+				<br>
 				<fieldset>
 					<legend>Grade in Course and Section Number</legend>
 					Course Number<br>
@@ -39,7 +37,23 @@
 			<?php include 'php/Professor.php';?>
 		</div>
 		<div id="Student" class="tabcontent">
-			<h3>This is the student database</h3>
+			<form action="index.php" target="_self" method="post">
+				<fieldset>
+					<legend>Check Courses</legend>
+					Course Number<br>
+					<!-- name is there so in PHP we can see what the value of it is -->
+					<input type="text" name="SCNum"><br><br>
+					<input type="submit" name="btnStuCourse" class="submitButton" value="Submit">
+				</fieldset>
+				<br>
+				<fieldset>
+					<legend>List Classes</legend>
+					CWID<br>
+					<!-- name is there so in PHP we can see what the value of it is -->
+					<input type="text" name="SCwid"><br><br>
+					<input type="submit" name="btnStuCwid" class="submitButton" value="Submit">
+				</fieldset>
+			</form>
 			<?php include 'php/Student.php';?>
 		</div>
 	</body>
