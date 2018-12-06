@@ -1,14 +1,4 @@
 <?php
-	// Connect to the mysql server
-	$hostName = "uranus.ecs.fullerton.edu";
-	$userName = "cs332d21";
-	$password = "eeteezoo";
-	$link=mysql_connect($hostName, $userName, $password) or die("Unable to connect to host: $hostName");
-	 
-	//Connect to the database
-	$dbName = $userName;
-	$didConnectToDB = mysql_select_db($dbName, $link) or die("Unable to select database $dbName");
-	
 	if (isset($_POST['btnProfSsn']) || isset($_POST['btnProfCourse'])){
 		// Crazy way to get the Professor div to be selected on load
 		?>
@@ -17,6 +7,16 @@
 		</script>
 		<?php
 		// Back to the php script
+		
+		// Connect to the mysql server
+		$hostName = "uranus.ecs.fullerton.edu";
+		$userName = "cs332d21";
+		$password = "eeteezoo";
+		$link=mysql_connect($hostName, $userName, $password) or die("Unable to connect to host: $hostName");
+		 
+		//Connect to the database
+		$dbName = $userName;
+		$didConnectToDB = mysql_select_db($dbName, $link) or die("Unable to select database $dbName");
 	}
 	
 	// Check which button was pressed
@@ -29,15 +29,18 @@
 			$SQL = str_replace("REPLACE", (string)$_POST['PSsn'], $SQL);
 			// Run the query
 			$Professor = mysql_query($SQL, $link) or die("Unable to run query $SQL");
+						
+			// disconnect from the sql server
+			$didDisconnect = mysql_close($link);
+			
 			$NumOfRows = mysql_numrows($Professor);
 			// If the number of rows is 0, that means the query returned empty
 			if ($NumOfRows > 0){
 				echo "<p>Class Schedual for ",mysql_result($Professor,0,"P.P_Name"),"</p>";
 				// Make a table to organize the data better
-				echo "<table border='1'><tr><td>SSN</td><td>Course Title</td><td>Classroom</td><td>Meeting Days</td><td>Beginning Time</td><td>Ending Time</td></tr>";
+				echo "<table border='1'><tr><td>Course Title</td><td>Classroom</td><td>Meeting Days</td><td>Beginning Time</td><td>Ending Time</td></tr>";
 				for($i = 0; $i<mysql_numrows($Professor);$i++){
 					echo "<tr>";
-					echo "<td>",mysql_result($Professor,$i,"P.P_Ssn"),"</td>";
 					echo "<td>",mysql_result($Professor,$i,"C.C_Title"),"</td>";
 					echo "<td>",mysql_result($Professor,$i,"CS.CS_Classroom"),"</td>";
 					echo "<td>",mysql_result($Professor,$i,"CS.CS_MeetingDays"),"</td>";
@@ -68,6 +71,10 @@
 			
 			// Run the query
 			$Query = mysql_query($SQL, $link) or die("Unable to run query $SQL");
+					
+			// disconnect from the sql server
+			$didDisconnect = mysql_close($link);
+			
 			$NumOfRows = mysql_numrows($Query);
 			if ($NumOfRows > 0){
 				echo "<p> Grades for ", mysql_result($Query, 0, "C.C_Title"),"</p>";
@@ -92,7 +99,4 @@
 			echo "<h1>Fill out every location please!</h1>";
 		}
 	}
-	
-	// disconnect from the sql server
-	$didDisconnect = mysql_close($link);
 ?>
